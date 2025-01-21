@@ -4,7 +4,61 @@
 Simulate a depth anything using the ax630c simulator pulsar2 run.
 
 
-# pulsar2 document 
+## How to
+
+Enter Docker in pulsar2
+
+```
+ sudo docker run -it --net host --rm -v $PWD:/data pulsar2:3.3
+```
+
+Check the interface of depth_anything_u8.axmodel
+
+```
+# python axmodel_get_info.py depth_anything_u8.axmodel
+INFO: ãƒ¢ãƒ‡ãƒ«ã‚’èª­ã¿è¾¼ã¿ä¸­: depth_anything_u8.axmodel
+
+=== ONNXãƒ¢ãƒ‡ãƒ«æƒ…å ± ===
+ãƒ¢ãƒ‡ãƒ«ãƒ‘ã‚¹: depth_anything_u8.axmodel
+IRãƒãƒ¼ã‚¸ãƒ§ãƒ³: 8
+ãƒ—ãƒ­ãƒ‡ãƒ¥ãƒ¼ã‚µãƒ¼: Pulsar2 (ãƒãƒ¼ã‚¸ãƒ§ãƒ³: )
+ãƒ‰ãƒ¡ã‚¤ãƒ³:
+ãƒ¢ãƒ‡ãƒ«ãƒãƒ¼ã‚¸ãƒ§ãƒ³: 0
+
+=== å…¥åŠ›ãƒ†ãƒ³ã‚½ãƒ«æƒ…å ± ===
+
+å…¥åŠ›å: image
+å½¢çŠ¶: [1, 256, 384, 3]
+ãƒ‡ãƒ¼ã‚¿å‹: uint8
+ç·è¦ç´ æ•°: 294,912
+
+=== å‡ºåŠ›ãƒ†ãƒ³ã‚½ãƒ«æƒ…å ± ===
+
+å‡ºåŠ›å: depth
+å½¢çŠ¶: [1, 1, 256, 384]
+ãƒ‡ãƒ¼ã‚¿å‹: float32
+ç·è¦ç´ æ•°: 98,304
+```
+
+
+
+```
+# python pulsar2_run_preprocess_axsim.py
+# pulsar2 run --model depth_anything_u8.axmodel --input_dir sim_inputs --output_dir sim_outputs --list list.txt
+# python pulsar2_run_postprosess_step1.py   --model depth_anything_u8.axmodel   --output-dir ./sim_outputs/0   --num-outputs 1   --bin1 ./sim_outputs/0/depth.bin
+
+```
+
+
+```
+# python pulsar2_run_preprocess_onnx.py
+# pulsar2 run --model depth_anything_u8.axmodel --input_dir sim_inputs --output_dir sim_outputs --list list.txt
+# python pulsar2_run_postprosess_step1.py   --model depth_anything_u8.axmodel   --output-dir ./sim_outputs/0   --num-outputs 1   --bin1 ./sim_outputs/0/depth.bin
+
+```
+
+
+## pulsar2 document 
 
 ```
 # pulsar2 run -h
@@ -33,81 +87,25 @@ optional arguments:
   --target_hardware     target hardware, only work for QuantAxModel. type: enum. required: false. default: AX650.
                         option: AX650, AX620E, M76H.
 
-optionalƒpƒ‰ƒ[ƒ^:
-- `--model`: Às‚·‚éƒ‚ƒfƒ‹‚ÌƒpƒXiONNXAQuantAxModelACompiledAxmodel‚ğƒTƒ|[ƒgj
-- `--input_dir`: ƒ‚ƒfƒ‹‚Ì“ü—Íƒf[ƒ^‚ÌƒfƒBƒŒƒNƒgƒŠ
-- `--output_dir`: ƒ‚ƒfƒ‹o—Íƒf[ƒ^‚Ì•Û‘¶æƒfƒBƒŒƒNƒgƒŠ
-- `--list`: ƒŠƒXƒgƒtƒ@ƒCƒ‹‚ÌƒpƒX
+optionalãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿:
+- `--model`: å®Ÿè¡Œã™ã‚‹ãƒ¢ãƒ‡ãƒ«ã®ãƒ‘ã‚¹ï¼ˆONNXã€QuantAxModelã€CompiledAxmodelã‚’ã‚µãƒãƒ¼ãƒˆï¼‰
+- `--input_dir`: ãƒ¢ãƒ‡ãƒ«ã®å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
+- `--output_dir`: ãƒ¢ãƒ‡ãƒ«å‡ºåŠ›ãƒ‡ãƒ¼ã‚¿ã®ä¿å­˜å…ˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
+- `--list`: ãƒªã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹
 
-ƒIƒvƒVƒ‡ƒ“ƒpƒ‰ƒ[ƒ^:
-- `--config`: İ’èƒtƒ@ƒCƒ‹‚ÌƒpƒXijson/yaml/toml/prototxt‚ğƒTƒ|[ƒgj
-- `--random_input`: ƒ‰ƒ“ƒ_ƒ€‚È“ü—Íƒf[ƒ^‚ğg—piƒfƒtƒHƒ‹ƒg: falsej
-- `--batch_size`: “®“I„˜_ƒ‚[ƒh‚Åg—p‚·‚éƒoƒbƒ`ƒTƒCƒYiCompiledAxModel‚Ì‚İ—LŒøj
-- `--enable_perlayer_output`: ƒŒƒCƒ„[‚²‚Æ‚Ìo—Íƒ_ƒ“ƒv‚ğ—LŒø‰»iƒfƒtƒHƒ‹ƒg: falsej
-- `--mode`: Àsƒ‚[ƒhiQuantAxModel‚Ì‚İ—LŒøj
-  - ƒIƒvƒVƒ‡ƒ“: ReferenceANPUBackend
-  - ƒfƒtƒHƒ‹ƒg: Reference
-- `--target_hardware`: ƒ^[ƒQƒbƒgƒn[ƒhƒEƒFƒAiQuantAxModel‚Ì‚İ—LŒøj
-  - ƒIƒvƒVƒ‡ƒ“: AX650AAX620EAM76H
-  - ƒfƒtƒHƒ‹ƒg: AX650
-
-```
-
-
-## How to
-
-Enter Docker in pulsar2
-
-```
- sudo docker run -it --net host --rm -v $PWD:/data pulsar2:3.3
-```
-
-Check the interface of depth_anything_u8.axmodel
-
-```
-# python axmodel_get_info.py depth_anything_u8.axmodel
-INFO: ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚İ’†: depth_anything_u8.axmodel
-
-=== ONNXƒ‚ƒfƒ‹î•ñ ===
-ƒ‚ƒfƒ‹ƒpƒX: depth_anything_u8.axmodel
-IRƒo[ƒWƒ‡ƒ“: 8
-ƒvƒƒfƒ…[ƒT[: Pulsar2 (ƒo[ƒWƒ‡ƒ“: )
-ƒhƒƒCƒ“:
-ƒ‚ƒfƒ‹ƒo[ƒWƒ‡ƒ“: 0
-
-=== “ü—Íƒeƒ“ƒ\ƒ‹î•ñ ===
-
-“ü—Í–¼: image
-Œ`ó: [1, 256, 384, 3]
-ƒf[ƒ^Œ^: uint8
-‘—v‘f”: 294,912
-
-=== o—Íƒeƒ“ƒ\ƒ‹î•ñ ===
-
-o—Í–¼: depth
-Œ`ó: [1, 1, 256, 384]
-ƒf[ƒ^Œ^: float32
-‘—v‘f”: 98,304
-```
-
-
-
-```
-# python pulsar2_run_preprocess_axsim.py
-# pulsar2 run --model depth_anything_u8.axmodel --input_dir sim_inputs --output_dir sim_outputs --list list.txt
-# python pulsar2_run_postprosess_step1.py   --model depth_anything_u8.axmodel   --output-dir ./sim_outputs/0   --num-outputs 1   --bin1 ./sim_outputs/0/depth.bin
+ã‚ªãƒ—ã‚·ãƒ§ãƒ³ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿:
+- `--config`: è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹ï¼ˆjson/yaml/toml/prototxtã‚’ã‚µãƒãƒ¼ãƒˆï¼‰
+- `--random_input`: ãƒ©ãƒ³ãƒ€ãƒ ãªå…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã‚’ä½¿ç”¨ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: falseï¼‰
+- `--batch_size`: å‹•çš„æ¨è«–ãƒ¢ãƒ¼ãƒ‰ã§ä½¿ç”¨ã™ã‚‹ãƒãƒƒãƒã‚µã‚¤ã‚ºï¼ˆCompiledAxModelã®ã¿æœ‰åŠ¹ï¼‰
+- `--enable_perlayer_output`: ãƒ¬ã‚¤ãƒ¤ãƒ¼ã”ã¨ã®å‡ºåŠ›ãƒ€ãƒ³ãƒ—ã‚’æœ‰åŠ¹åŒ–ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: falseï¼‰
+- `--mode`: å®Ÿè¡Œãƒ¢ãƒ¼ãƒ‰ï¼ˆQuantAxModelã®ã¿æœ‰åŠ¹ï¼‰
+  - ã‚ªãƒ—ã‚·ãƒ§ãƒ³: Referenceã€NPUBackend
+  - ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: Reference
+- `--target_hardware`: ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢ï¼ˆQuantAxModelã®ã¿æœ‰åŠ¹ï¼‰
+  - ã‚ªãƒ—ã‚·ãƒ§ãƒ³: AX650ã€AX620Eã€M76H
+  - ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ: AX650
 
 ```
 
-
-```
-# python pulsar2_run_preprocess_onnx.py
-# pulsar2 run --model depth_anything_u8.axmodel --input_dir sim_inputs --output_dir sim_outputs --list list.txt
-# python pulsar2_run_postprosess_step1.py   --model depth_anything_u8.axmodel   --output-dir ./sim_outputs/0   --num-outputs 1   --bin1 ./sim_outputs/0/depth.bin
-
-```
-
-```
-```
 
 
