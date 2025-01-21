@@ -11,7 +11,10 @@ https://github.com/nnn112358/M5_LLM_Module_Report/blob/main/anysome_Module_LLM.m
 Enter Docker in pulsar2
 
 ```
- sudo docker run -it --net host --rm -v $PWD:/data pulsar2:3.3
+# sudo docker run -it --net host --rm -v $PWD:/data pulsar2:3.3
+```
+```
+# pip install -r requirements.txt
 ```
 
 
