@@ -1,8 +1,10 @@
 
 ## Purpose
 
-Simulate a depth anything using the ax630c simulator pulsar2 run.
+Simulate a depth anything using the ax630c simulator pulsar2 run.<br>
+pulsar2 is a software environment released by axera-tech.<br>
 
+https://github.com/AXERA-TECH/pulsar2-docs-en
 
 ## How to
 
@@ -14,6 +16,24 @@ Enter Docker in pulsar2
 
 Check the interface of depth_anything_u8.axmodel
 
+To run a simulation with a quantized axmodel
+```
+# python pulsar2_run_preprocess_axsim.py
+# pulsar2 run --model depth_anything_u8.axmodel --input_dir sim_inputs --output_dir sim_outputs --list list.txt
+# python pulsar2_run_postprosess_step1.py   --model depth_anything_u8.axmodel   --output-dir ./sim_outputs/0   --num-outputs 1   --bin1 ./sim_outputs/0/depth.bin
+```
+
+To perform a simulation with onnx before quantization
+
+```
+# python pulsar2_run_preprocess_onnx.py
+# pulsar2 run --model depth_anything_u8.axmodel --input_dir sim_inputs --output_dir sim_outputs --list list.txt
+# python pulsar2_run_postprosess_step1.py   --model depth_anything_u8.axmodel   --output-dir ./sim_outputs/0   --num-outputs 1   --bin1 ./sim_outputs/0/depth.bin
+
+```
+
+
+## Tools
 ```
 # python axmodel_get_info.py depth_anything_u8.axmodel
 INFO: モデルを読み込み中: depth_anything_u8.axmodel
@@ -38,23 +58,6 @@ IRバージョン: 8
 形状: [1, 1, 256, 384]
 データ型: float32
 総要素数: 98,304
-```
-
-
-
-```
-# python pulsar2_run_preprocess_axsim.py
-# pulsar2 run --model depth_anything_u8.axmodel --input_dir sim_inputs --output_dir sim_outputs --list list.txt
-# python pulsar2_run_postprosess_step1.py   --model depth_anything_u8.axmodel   --output-dir ./sim_outputs/0   --num-outputs 1   --bin1 ./sim_outputs/0/depth.bin
-
-```
-
-
-```
-# python pulsar2_run_preprocess_onnx.py
-# pulsar2 run --model depth_anything_u8.axmodel --input_dir sim_inputs --output_dir sim_outputs --list list.txt
-# python pulsar2_run_postprosess_step1.py   --model depth_anything_u8.axmodel   --output-dir ./sim_outputs/0   --num-outputs 1   --bin1 ./sim_outputs/0/depth.bin
-
 ```
 
 
