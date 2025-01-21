@@ -1,7 +1,7 @@
 
 ## Purpose
 
-Simulate a depth anything using the ax630c simulator pulsar2 run.<br>
+Simulate a depth anything using the M5Stack Module-LLM(ax630c) simulator pulsar2 run.<br>
 pulsar2 is a software environment released by axera-tech.<br>
 
 https://github.com/AXERA-TECH/pulsar2-docs-en
