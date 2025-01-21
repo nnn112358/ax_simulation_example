@@ -4,8 +4,8 @@
 Simulate a depth anything using the M5Stack Module-LLM(ax630c) simulator pulsar2 run.<br>
 pulsar2 is a software environment released by axera-tech.<br>
 
-https://github.com/AXERA-TECH/pulsar2-docs-en
-
+https://github.com/AXERA-TECH/pulsar2-docs-en<br>
+https://github.com/nnn112358/M5_LLM_Module_Report/blob/main/anysome_Module_LLM.md<br>
 ## How to
 
 Enter Docker in pulsar2
