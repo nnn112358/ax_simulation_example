@@ -14,6 +14,11 @@ Enter Docker in pulsar2
  sudo docker run -it --net host --rm -v $PWD:/data pulsar2:3.3
 ```
 
+## Result
+
+![image](https://github.com/user-attachments/assets/72efdf9c-7c70-44a3-9615-3248f091be30)
+
+
 Check the interface of depth_anything_u8.axmodel
 
 To run a simulation with a quantized axmodel
@@ -29,8 +34,9 @@ To perform a simulation with onnx before quantization
 # python pulsar2_run_preprocess_onnx.py
 # pulsar2 run --model depth_anything_u8.axmodel --input_dir sim_inputs --output_dir sim_outputs --list list.txt
 # python pulsar2_run_postprosess_step1.py   --model depth_anything_u8.axmodel   --output-dir ./sim_outputs/0   --num-outputs 1   --bin1 ./sim_outputs/0/depth.bin
-
 ```
+
+
 
 
 ## Tools
