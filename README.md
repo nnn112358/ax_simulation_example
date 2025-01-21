@@ -19,7 +19,6 @@ Enter Docker in pulsar2
 
 
 
-Check the interface of depth_anything_u8.axmodel
 
 To run a simulation with a quantized axmodel
 ```
@@ -43,6 +42,8 @@ To perform a simulation with onnx before quantization
 
 
 ## Tools
+Check the interface of depth_anything_u8.axmodel
+
 ```
 # python axmodel_get_info.py depth_anything_u8.axmodel
 INFO: モデルを読み込み中: depth_anything_u8.axmodel
